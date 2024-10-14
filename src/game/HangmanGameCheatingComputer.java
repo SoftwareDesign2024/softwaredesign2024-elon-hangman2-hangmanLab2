@@ -57,7 +57,7 @@ public class HangmanGameCheatingComputer {
             String guess = ConsoleReader.promptString("Make a guess: ");
             if (guess.length() == 1 && Character.isAlphabetic(guess.charAt(0))) {
                 makeGuess(guess.toLowerCase().charAt(0));
-                if (isGameLost()) {
+                if (isGameLost()) 
                     System.out.println("YOU ARE HUNG!!!");
                     gameOver = true;
                 }
@@ -65,7 +65,7 @@ public class HangmanGameCheatingComputer {
                     System.out.println("YOU WIN!!!");
                     gameOver = true;
                 }
-            }
+            
             else {
                 System.out.println("Please enter a single letter ...");
             }
