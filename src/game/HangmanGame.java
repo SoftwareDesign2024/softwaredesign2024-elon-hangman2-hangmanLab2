@@ -11,6 +11,8 @@ import util.HangmanDictionary;
  *
  * @author Robert C. Duvall
  * @author Shannon Duvall
+ * 
+ * //refactored @author jamie mancuso
  */
 public class HangmanGame {
 	private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
@@ -28,7 +30,7 @@ public class HangmanGame {
      * Create Hangman game with the given dictionary of words to play a game with words 
      * of the given length and giving the user the given number of chances.
      */
-    public HangmanGame (Guesser guess, Executioner execute, HangmanDictionary dictionary, int wordLength, int numGuesses) {
+    public HangmanGame (Guesser guess, Executioner execute) {
     	guesser = guess;
         execution = execute;
     }
@@ -46,19 +48,15 @@ public class HangmanGame {
         boolean gameOver = false;
         while (!gameOver) {
             printStatus();
-
-            String guess = ConsoleReader.promptString("Make a guess: ");
-            if (guess.length() == 1 && Character.isAlphabetic(guess.charAt(0))) {
-            	Boolean checkGuess = execution.checkGuessInSecret(guess.toLowerCase().charAt(0));
-                guesser.makeGuess(guess.toLowerCase().charAt(0), checkGuess);
-                if (isGameLost()) {
-                    System.out.println("YOU ARE HUNG!!!");
-                    gameOver = true;
-                }
-                else if (execution.isGameWon()) {
-                    System.out.println("YOU WIN!!!");
-                    gameOver = true;
-                }
+        	Boolean checkGuess = execution.checkGuessInSecret(guesser.getGuess());
+            guesser.makeGuess(guesser.getGuess(), checkGuess);
+            if (isGameLost()) {
+                System.out.println("YOU ARE HUNG!!!");
+                gameOver = true;
+            }
+            else if (execution.isGameWon()) {
+                System.out.println("YOU WIN!!!");
+                gameOver = true;
             }
             else {
                 System.out.println("Please enter a single letter ...");

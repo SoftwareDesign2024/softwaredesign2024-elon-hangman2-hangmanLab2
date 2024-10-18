@@ -1,6 +1,10 @@
 package game;
 
-public class Guesser  extends GuesserSuperClass{
+
+//refactored @author jamie mancuso
+import util.ConsoleReader;
+
+public class Guesser{
 	// how many guesses are remaining
     private int myNumGuessesLeft;
  // tracks letters guessed
@@ -28,6 +32,11 @@ public class Guesser  extends GuesserSuperClass{
     
     public void subtractGuess() {
     	myNumGuessesLeft -= 1;
+    }
+    
+    public Character getGuess() {
+    	String guess = ConsoleReader.promptString("Make a guess: ");
+    	return guess.toLowerCase().charAt(0);
     }
     
     // Process a guess by updating the necessary internal state.

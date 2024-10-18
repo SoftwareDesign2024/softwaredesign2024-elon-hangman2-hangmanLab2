@@ -1,6 +1,10 @@
 package game;
 
 import util.DisplayWord;
+
+//refactored @author jamie mancuso
+
+
 import util.HangmanDictionary;
 
 public class Executioner {
