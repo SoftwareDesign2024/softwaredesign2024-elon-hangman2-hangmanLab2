@@ -28,22 +28,16 @@ public class HangmanGame {
      * Create Hangman game with the given dictionary of words to play a game with words 
      * of the given length and giving the user the given number of chances.
      */
+    public HangmanGame (Guesser guess, Executioner execute, HangmanDictionary dictionary, int wordLength, int numGuesses) {
+    	guesser = guess;
+        execution = execute;
+    }
     public HangmanGame (HangmanDictionary dictionary, int wordLength, int numGuesses) {
     	guesser = new Guesser(ALPHABET,numGuesses);
         execution = new Executioner(dictionary, wordLength);
     }
     
-    // Process a guess by updating the necessary internal state.
-    public void makeGuess (char guess) {
-        // do not count repeated guess as a miss
-        int index = guesser.getMyLettersLeftToGuess().indexOf("" + guess);
-        if (index >= 0) {
-            guesser.recordGuess(index);
-            if (! execution.checkGuessInSecret(guess)) {
-                guesser.subtractGuess();
-            }
-        }
-    }
+
 
     /**
      * Play one complete game.
@@ -55,12 +49,13 @@ public class HangmanGame {
 
             String guess = ConsoleReader.promptString("Make a guess: ");
             if (guess.length() == 1 && Character.isAlphabetic(guess.charAt(0))) {
-                makeGuess(guess.toLowerCase().charAt(0));
+            	Boolean checkGuess = execution.checkGuessInSecret(guess.toLowerCase().charAt(0));
+                guesser.makeGuess(guess.toLowerCase().charAt(0), checkGuess);
                 if (isGameLost()) {
                     System.out.println("YOU ARE HUNG!!!");
                     gameOver = true;
                 }
-                else if (isGameWon()) {
+                else if (execution.isGameWon()) {
                     System.out.println("YOU WIN!!!");
                     gameOver = true;
                 }
@@ -69,7 +64,7 @@ public class HangmanGame {
                 System.out.println("Please enter a single letter ...");
             }
         }
-        System.out.println("The secret word was " + execution.getMySecretWord());
+        
     }
 
 
@@ -77,9 +72,7 @@ public class HangmanGame {
 
    
     // Returns true only if the guesser has guessed all letters in the secret word.
-    private boolean isGameWon () {
-        return execution.getMyDisplayWord().equals(execution.getMySecretWord());
-    }
+
 
     // Returns true only if the guesser has used up all their chances to guess.
     private boolean isGameLost () {

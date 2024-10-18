@@ -1,6 +1,6 @@
 package game;
 
-public class Guesser {
+public class Guesser  extends GuesserSuperClass{
 	// how many guesses are remaining
     private int myNumGuessesLeft;
  // tracks letters guessed
@@ -29,4 +29,19 @@ public class Guesser {
     public void subtractGuess() {
     	myNumGuessesLeft -= 1;
     }
+    
+    // Process a guess by updating the necessary internal state.
+    public void makeGuess (char guess, boolean checkGuess) {
+        // do not count repeated guess as a miss
+        int index = myLettersLeftToGuess.indexOf("" + guess);
+        if (index >= 0) {
+            recordGuess(index);
+            if (! checkGuess) {
+                subtractGuess();
+            }
+        }
+    }
+    
+    
+    
 }

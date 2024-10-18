@@ -11,7 +11,7 @@ import util.HangmanDictionary;
  *
  * @author Robert C. Duvall
  */
-public class HangmanGameAutoGuesser {
+public class HangmanGameAutoGuesser extends Guesser {
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
     private static final String LETTERS_ORDERED_BY_FREQUENCY = "etaoinshrldcumfpgwybvkxjqz";
 
@@ -33,9 +33,8 @@ public class HangmanGameAutoGuesser {
      * of the given length and giving the user the given number of chances.
      */
     public HangmanGameAutoGuesser (HangmanDictionary dictionary, int wordLength, int numGuesses) {
+    	super(ALPHABET, numGuesses);
         mySecretWord = getSecretWord(dictionary, wordLength);
-        myNumGuessesLeft = numGuesses;
-        myLettersLeftToGuess = new StringBuilder(ALPHABET);
         myDisplayWord = new DisplayWord(mySecretWord);
         myLetters = LETTERS_ORDERED_BY_FREQUENCY;
         myIndex = 0;
@@ -44,6 +43,7 @@ public class HangmanGameAutoGuesser {
     /**
      * Play one complete game.
      */
+   
     public void play () {
         boolean gameOver = false;
         while (!gameOver) {

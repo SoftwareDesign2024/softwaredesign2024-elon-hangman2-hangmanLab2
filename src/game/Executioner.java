@@ -7,9 +7,9 @@ public class Executioner {
 	
 	
 	 // word that is being guessed
-    private String mySecretWord;
+    protected String mySecretWord;
     // what is shown to the user
-    private DisplayWord myDisplayWord;
+    protected DisplayWord myDisplayWord;
     
     public Executioner(HangmanDictionary dictionary, int wordLength) {
     	mySecretWord = makeSecretWord(dictionary, wordLength);
@@ -30,8 +30,15 @@ public class Executioner {
         return dictionary.getRandomWord(wordLength).toLowerCase();
     }
     
-    public String getMySecretWord() {
-    	return mySecretWord;
+//    public String getMySecretWord() {
+//    	return mySecretWord;
+//    }
+    
+    public void printSecretWord() {
+    	System.out.println("The secret word was " + mySecretWord);
+    }
+    public boolean isGameWon () {
+        return myDisplayWord.equals(mySecretWord);
     }
     
     public DisplayWord getMyDisplayWord() {
